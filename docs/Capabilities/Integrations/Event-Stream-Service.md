@@ -1,14 +1,10 @@
-[Home](index) > [Capabilities](Capabilities) > [Integrations](Integrations) > **CHEFS Event Stream Service** 
-***  
-# CHEFS Event Stream Service
+[Home](../../index) > [Capabilities](../../Capabilities.md) > **Integrations** > **Event Stream Service**
+***
+# Event Stream Service
 
-CHEFS has added an Event Stream Service which allows Form Owners to consume and process real-time data about the forms (ex. a new version of the form has been published) and submissions. 
-
-Previously, Form Owners could (and still can) configure event notifications via webhook (see [Event Subscription](./Event-Subscription.md)). These events are elementary, with metadata providing the IDs and event types. Generally, once the event notification is received the external application/service calls back to CHEFS via the CHEFS API to retrieve the full event data (form schema, submission data). This approach works but unnecessarily loads the CHEFS API service, degrading performance for all forms. More significantly, the logic for when and why an event is fired is directly coded into CHEFS. This is unsustainable as each external application may have different requirements for why an event is fired - a callback to CHEFS API is needed to determine if the event should be processed. 
+CHEFS has added an Event Stream Service which allows Form Owners to consume and process real-time data about the forms (ex. a new version of the form has been published) and submissions.
 
 Moving forward, CHEFS will fire events (with encrypted payloads) and allow the consumers to define the logic for processing on their end. An Event Stream Service allows multiple consumers to process the same event. For instance, the Form Owner can process the submission data, while a metrics reporter can add a count to their submissions totals, another service can analyze service loads by sector.
-
-This initial phase will introduce the Event Stream Service as a component of CHEFS, with the intention that it grows, matures, and becomes a Common Component.
 
 **Table of content:**
 
@@ -21,12 +17,12 @@ This initial phase will introduce the Event Stream Service as a component of CHE
 <a id="natsio"></a>
 [NATS](https://nats.io) is a connective technology built for the ever increasingly hyper-connected world. It is a single technology that enables applications to securely communicate across any combination of cloud vendors, on-premise, edge, web and mobile, and devices. NATS consists of a family of open-source products that are tightly integrated but can be deployed easily and independently. NATS is being used globally by thousands of companies, spanning use-cases including microservices, edge computing, mobile, IoT and can be used to augment or replace traditional messaging.
 
-NATS has been successfully used by many other projects within the BC Government. It can be scaled horizontally and runs without the need for a paid operator (e.g., [Kafka](https://kafka.apache.org)). 
+NATS has been successfully used by many other projects within the BC Government. It can be scaled horizontally and runs without the need for a paid operator (e.g., [Kafka](https://kafka.apache.org)).
 
 NATS has official clients in multiple mainstream languages so Form Owners shouldn't have to adopt a new language to write their event consumers.
 
 ### Event Stream
-The CHEFS Event Stream is implemented as a [NATS JetStream](https://docs.nats.io/nats-concepts/jetstream). 
+The CHEFS Event Stream is implemented as a [NATS JetStream](https://docs.nats.io/nats-concepts/jetstream).
 
 JetStream offers many benefits over a traditional publisher/subscriber relationship: replay policies, durability, bulk handling, starting from a specific sequence, and starting from a specific date.
 
@@ -41,7 +37,7 @@ NATS allows a variety of consumer types and this is required reading: [JetStream
 **ALSO IMPORTANT** - The allowed encrypted message size is < 1 Mb. Encryption dramatically adds to the message size, meaning raw json included in the payload (ie. submission data) should be under 50kb. You will receive an error attribute in your event payload if the overall message is too large.
 
 ### Credentials
-Consumers will use connect using [NKeys](https://docs.nats.io/running-a-nats-service/configuration/securing_nats/auth_intro/nkey_auth). 
+Consumers will use connect using [NKeys](https://docs.nats.io/running-a-nats-service/configuration/securing_nats/auth_intro/nkey_auth).
 
 > With NKeys the server can verify identities without ever storing or ever seeing private keys. The authentication system works by requiring a connecting client to provide its public key and digitally sign a challenge with its private key. The server generates a random challenge with every connection request, making it immune to playback attacks. The generated signature is validated against the provided public key, thus proving the identity of the client. If the public key is known to the server, authentication succeeds.
 
@@ -51,7 +47,7 @@ CHEFS will **not** store the private key (seed). Once it is delivered to you and
 <a id="chefs-stream"></a>
 CHEFS will publish events to a stream named: `CHEFS`.
 
-Under this stream will be two major subject prefixes: 
+Under this stream will be two major subject prefixes:
 
 1. `PUBLIC.forms`
 2. `PRIVATE.forms`
@@ -59,7 +55,7 @@ Under this stream will be two major subject prefixes:
 
 Consumers specify which subjects they wish to process and often use wildcards. For example, a consumer can specify `PUBLIC.forms.>` and `PRIVATE.forms.submissions.>`. This would consume ALL public forms events and only private submission events.
 
-`PUBLIC.forms` can be consumed by any client. These events will contain only metadata and no personal/private information. 
+`PUBLIC.forms` can be consumed by any client. These events will contain only metadata and no personal/private information.
 
 `PRIVATE.forms` can be consumed by any client but not fully understood. The payloads of these events will contain encrypted data. Only known and approved clients will have the key to decrypt the private information (ex., a form submission).
 
@@ -107,7 +103,7 @@ Other metadata will be provided as needed per type and only if the data is *NOT*
 
 **IMPORTANT** - Ensure you filter your event messages against your expected `source`. Events from Pull Request and Dev environments will use the same server but will have different `source`: (e.g., `pr-1444` and `chefs-dev`).
 
-An example to show the overall structure of an event message is: 
+An example to show the overall structure of an event message is:
 
 ```json
 {
@@ -131,7 +127,7 @@ See [Custom Form Metadata](./Form-Metadata.md) for information about form metada
 
 ### NATS Message Metadata
 
-NATS messages contain very valuable metadata that consumers should leverage for optimal processing. Each message on the stream will have a [sequence number](https://github.com/nats-io/nats.docs/blob/803d660c33496c9b7ba42360945be58621bbba0b/nats-concepts/seq_num.md) and a timestamp. Consumers can schedule batch consumption based on the sequence or timestamp of their last processed event. 
+NATS messages contain very valuable metadata that consumers should leverage for optimal processing. Each message on the stream will have a [sequence number](https://github.com/nats-io/nats.docs/blob/803d660c33496c9b7ba42360945be58621bbba0b/nats-concepts/seq_num.md) and a timestamp. Consumers can schedule batch consumption based on the sequence or timestamp of their last processed event.
 
 ### Example Consumer
 Please review our [demo code](https://github.com/bcgov/event-stream-service/blob/main/tools/pullConsumer.js) trivialized example of a [pull consumer](https://docs.nats.io/nats-concepts/jetstream/consumers). It is up to the external application that consumes/listens to the events to decide how to set up their consumer. This is one way in one language (JavaScript). Please review the documentation about [consumers](https://docs.nats.io/nats-concepts/jetstream/consumers) and review the approved [examples](https://natsbyexample.com) for more information.
@@ -145,7 +141,7 @@ Of note is checking for errors when processing the event messages. As noted abov
 ## Encryption
 <a id="encryption"></a>
 
-To securely facilitate the transmission of sensitive data between systems, CHEFS will encrypt the payloads for `PRIVATE.forms` events. 
+To securely facilitate the transmission of sensitive data between systems, CHEFS will encrypt the payloads for `PRIVATE.forms` events.
 
 Initially, CHEFS will encrypt the payload using an `aes-256-gcm` that requires a  `sha256` hash as a key (256 bits/32 bytes/64 characters).
 

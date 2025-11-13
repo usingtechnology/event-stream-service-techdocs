@@ -1,10 +1,8 @@
 
 
-[![img](images/capabilities.png)](Capabilities)
+[![img](images/capabilities.png)](Capabilities.md)
 
-[![img](images/components.png)](Components) 
-[![img](images/developer.png)](Developer)
-[![img](images/request_features.png)](https://ess-fider.apps.silver.devops.gov.bc.ca/)
+[![img](images/developer.png)](Developer.md)
 
 
 ## Contact Us

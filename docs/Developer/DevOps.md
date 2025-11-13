@@ -14,4 +14,4 @@ Application troubleshooting:
 * [Database Troubleshooting](Database-Troubleshooting): how to find and correct database performance problems
 
 ***
-[Terms of Use](Terms-of-Use) | [Privacy](Privacy) | [Security](Security) | [Service Agreement](Service-Agreement) | [Accessibility](Accessibility)
+[Terms of Use](Terms-of-Use) | [Privacy](Privacy) | [Security](Security) | [Service Agreement](Service-Agreement) | [Accessibility](../Capabilities/Accessibility)

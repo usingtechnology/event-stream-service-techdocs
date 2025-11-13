@@ -15,15 +15,7 @@ markdown_extensions:
 nav:
   - Home: index.md
   - About ESS: About.md
-  - Capabilities:
-      - Functionalities: Capabilities/Functionalities.md
-      - Integrations: Capabilities/Integrations.md
-      - Data Management: Capabilities/Data-Management.md
-  - Components:
-      - Event Stream Service: Components/Event-Stream-Service.md
-      - Event Stream Service API: Components/Event-Stream-Service-API.md
-      - Event Stream Service UI: Components/Event-Stream-Service-UI.md
-      - Event Stream Service CLI: Components/Event-Stream-Service-CLI.md
+  - Capabilities: Capabilities.md
   - Developer:
       - Contributors: Developer/Contributors.md
       - Deployment: Developer/Deployment.md

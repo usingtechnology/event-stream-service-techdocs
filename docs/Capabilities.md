@@ -1,12 +1,12 @@
-[Home](index) > **Capabilities** 
+[Home](index) > **Capabilities**
 ***
 
 ![img](images/capabilities-icon.png)
 
-* [Functionalities](Functionalities)
-* [Integrations](Integrations)
+* [Integrations](Capabilities/Integrations/Event-Stream-Service)
+* [Data Management](Capabilities/Data-Management/Privacy-and-data-collection)
 
 
 ***
-[Terms of Use](Terms-of-Use) | [Privacy](Privacy) | [Security](Security) | [Service Agreement](Service-Agreement) | [Accessibility](Accessibility)
+[Terms of Use](Terms-of-Use) | [Privacy](Privacy) | [Security](Security) | [Service Agreement](Service-Agreement) | [Accessibility](Capabilities/Accessibility)
 

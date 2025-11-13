@@ -59,7 +59,7 @@ The SoAR section "Assessment", subsection "Vulnerability Management" states:
 CHEFS is on a two week sprint schedule, and this review happens before every sprint planning meeting. In the `common-hosted-form-service` GitHub repository check the `Security` > `Dependabot` alerts. Create a JIRA item in the Backlog for new alerts using the template:
 
 - _Type_: Task
-- _Title_: Update package **[PACKAGE_NAME]** in **[MANIFEST_DIR]** so that security vulnerabilities are fixed 
+- _Title_: Update package **[PACKAGE_NAME]** in **[MANIFEST_DIR]** so that security vulnerabilities are fixed
 - _Description_:<br>The GitHub Dependabot process has created an alert for the **[PACKAGE_NAME]** dependency. To satisfy the requirements outlined in the Security Threat and Risk Assessment's (STRA) Statement of Acceptable Risks (SoAR), this vulnerability must be handled by updating the package version (or mitigated in some other way, if updating the package is not possible).<br>
   ht<workaround>tps://gi</workaround>thub.com/bcgov/common-hosted-form-service/security/dependabot/**[DEPENDABOT_ID]**
 - _Epic Link_: CHEFS DevOps
@@ -116,4 +116,4 @@ During sprint planning arrange for the new JIRA item to be included in the sprin
 |2023-10-12|&check;|&check;|&check;|Wait for Vue3|
 
 ***
-[Terms of Use](Terms-of-Use) | [Privacy](Privacy) | [Security](Security) | [Service Agreement](Service-Agreement) | [Accessibility](Accessibility)
+[Terms of Use](Terms-of-Use) | [Privacy](Privacy) | [Security](Security) | [Service Agreement](Service-Agreement) | [Accessibility](../Capabilities/Accessibility)
